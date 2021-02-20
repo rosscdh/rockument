@@ -23,6 +23,7 @@ class Revision(models.Model):
 
     class Meta:
         unique_together = [['app', 'revision']]
+        ordering = ['-revision', '-updated']
 
     def __str__(self):
         return f"{self.app.slug}@{self.revision}"

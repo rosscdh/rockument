@@ -1,5 +1,9 @@
 {% extends 'base.html' %}{% load static %}
 
+{% block head_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+{% endblock head_css %}
+
 {% block body %}
 
 {% verbatim %}
@@ -8,7 +12,7 @@
     <div id="nav" class="pure-u">
         <a href="#" class="nav-menu-button">Menu</a>
         <div class="nav-inner">
-            <div class="pure-menu-heading">Rockumentation</div>
+            <div class="pure-menu-heading">Rockumentation<i style="font-size: 1.5em;" class="fas fa-drum"></i></div>
             <form id="search" class="pure-form">
                 <input type="text" placeholder="Search" class="pure-input-rounded" />
             </form>
@@ -27,8 +31,8 @@
     <div id="list" class="pure-u-1">
         
         <div class="email-item email-item-unread pure-g" v-if="selected_app.latest_revisions">
-            <div class="pure-u">
-                <img width="64" height="64" alt="" class="email-avatar" src="/img/common/tilo-avatar.png">
+            <div class="pure-u" style="font-size: 2em;">
+                <i class="fas fa-bullseye"></i>
             </div>
 
             <div class="pure-u-3-4">
@@ -42,8 +46,8 @@
             </div>
         </div>
         <div class="email-item email-item-unread pure-g" v-if="!selected_app.latest_revisions">
-            <div class="pure-u">
-                <img width="64" height="64" alt="" class="email-avatar" src="{% static 'img/common/tilo-avatar.png' %}">
+            <div class="pure-u" style="font-size: 2.5em;">
+                <i class="fas fa-briefcase"></i>
             </div>
 
             <div class="pure-u-3-4">
@@ -56,8 +60,8 @@
         </div>
 
         <div class="email-item email-item-selected pure-g" v-for="rev in selected_app.latest_revisions">
-            <div class="pure-u">
-                <img width="64" height="64" alt="" class="email-avatar" src="{% static 'img/common/tilo-avatar.png' %}">
+            <div class="pure-u" style="font-size: 2em;">
+                <i class="fas fa-code-branch"></i>
             </div>
 
             <div class="pure-u-3-4">
@@ -102,7 +106,7 @@
                     Post the document as a form
                     <blockquote>
                     <code>
-                    http -f post http://localhost:8000/u/ app=test repo=https://github.com/rosscdh/rockument.git payload@$PWD/test-payload.zip revision=v0.0.4
+                    http -f post http://localhost:8000/u/ app='GO Backend' repo=https://github.com/rosscdh/rockument.git payload@$PWD/test-payload.zip revision=v0.0.4
                     </code>
                     </blockquote>
                     </li>
@@ -116,8 +120,10 @@
 {% endverbatim %}
 {% endblock %}
 
+
 {% block end_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+
 
 {{ object_list|json_script:"app-data" }}
 <script>
