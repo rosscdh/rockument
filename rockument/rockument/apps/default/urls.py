@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf.urls import url
 from django.views import generic
 from rockument.apps.sponge.models import App
-
+from rockument.apps.default import views
 urlpatterns = [
     url(
         r"^about/$",
@@ -11,7 +11,7 @@ urlpatterns = [
     ),
     url(
         r"^$",
-        generic.ListView.as_view(model=App, template_name='default/home.html'),
+        views.HomePageView.as_view(),
         name="home",
     ),
 ]
