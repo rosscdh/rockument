@@ -113,7 +113,6 @@
 
 {% block end_js %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous"></script>
 
 {{ object_list|json_script:"app-data" }}
 <script>
@@ -122,14 +121,7 @@ Vue.filter('formatDate', function(value) {
     return moment(String(value)).fromNow()
   }
 })
-var idx = lunr(function () {
-  this.ref('name')
-  this.field('slug')
 
-  documents.forEach(function (doc) {
-    this.add(doc)
-  }, this)
-})
 var app = new Vue({
   el: '#app',
   data: {
