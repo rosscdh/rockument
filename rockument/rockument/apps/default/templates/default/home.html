@@ -8,13 +8,17 @@
     <div id="nav" class="pure-u">
         <a href="#" class="nav-menu-button">Menu</a>
         <div class="nav-inner">
-            <form class="pure-form">
-                <input type="text" class="pure-input-rounded" />
+            <div class="pure-menu-heading">Rockumentation</div>
+            <form id="search" class="pure-form">
+                <input type="text" placeholder="Search" class="pure-input-rounded" />
             </form>
             <div class="pure-menu">
                 <ul class="pure-menu-list">
                 <li class="pure-menu-item" v-for="app in apps" :key="app.id" v-on:click="selectApp(app)">
                 <a href="#" class="pure-menu-link">{{ app.name }} <span class="revision-count">({{ app.num_revisions }})</span></a>
+                </li>
+                <li class="pure-menu-heading" v-if="apps.length == 0">
+                    No Apps
                 </li>
                 </ul>
             </div>
@@ -30,10 +34,10 @@
             <div class="pure-u-3-4">
                 <h5 class="email-name">{{ selected_app.name }}@Latest</h5>
                 <h4 class="email-subject">{{ selected_app.latest_revisions[0].revision }}</h4>
-                <h4 class="email-subject">view {{ selected_app.latest_revisions[0].updated | formatDate }}</h4>
                 <p class="email-desc">
                     <a :href="selected_app.url">Latest Revision</a>
                     <span>{{ selected_app.latest_revisions[0].repo }}</span>
+                    <br/><span class="email-subject">{{ selected_app.latest_revisions[0].updated | formatDate }}</span>
                 </p>
             </div>
         </div>
@@ -62,13 +66,14 @@
                 <h4 class="email-subject">{{ rev.updated | formatDate }}</h4>
                 <p class="email-desc">
                     <a :href="rev.url">View Revision</a>
+                    <br/><span class="email-subject" :alt="rev.updated">{{ rev.updated | formatDate }}</span>
                 </p>
             </div>
         </div>
 
     </div>
 
-    <div id="main" class="pure-u-1">
+    <div id="main" class="pure-u-1-3">
         <div class="email-content">
             <div class="email-content-header pure-g">
                 <div class="pure-u-1-2">
