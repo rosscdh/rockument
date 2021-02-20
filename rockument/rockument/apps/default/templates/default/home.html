@@ -29,9 +29,11 @@
 
             <div class="pure-u-3-4">
                 <h5 class="email-name">{{ selected_app.name }}@Latest</h5>
-                <h4 class="email-subject">view the latest</h4>
+                <h4 class="email-subject">{{ selected_app.latest_revisions[0].revision }}</h4>
+                <h4 class="email-subject">view {{ selected_app.latest_revisions[0].updated | formatDate }}</h4>
                 <p class="email-desc">
-                    The <a :href="selected_app.url">Latest Revision</a>
+                    <a :href="selected_app.url">Latest Revision</a>
+                    <span>{{ selected_app.latest_revisions[0].repo }}</span>
                 </p>
             </div>
         </div>
@@ -55,10 +57,11 @@
             </div>
 
             <div class="pure-u-3-4">
-                <h5 class="email-name">{{ selected_app.name }}</h5>
+                <h5 class="email-name">{{ selected_app.name }}@{{ rev.revision }}</h5>
                 <h4 class="email-subject">{{ rev.revision }}</h4>
+                <h4 class="email-subject">{{ rev.updated | formatDate }}</h4>
                 <p class="email-desc">
-                    The <a :href="rev.url">View Revision</a>
+                    <a :href="rev.url">View Revision</a>
                 </p>
             </div>
         </div>
@@ -69,35 +72,36 @@
         <div class="email-content">
             <div class="email-content-header pure-g">
                 <div class="pure-u-1-2">
-                    <h1 class="email-content-title">Hello from Toronto</h1>
+                    <h1 class="email-content-title">Upload a Doc</h1>
                     <p class="email-content-subtitle">
-                        From <a>Tilo Mitra</a> at <span>3:56pm, April 3, 2012</span>
+                        How do I <a>upload</a> my <span>documentation</span>
                     </p>
                 </div>
 
-                <div class="email-content-controls pure-u-1-2">
+                <!--<div class="email-content-controls pure-u-1-2">
                     <button class="secondary-button pure-button">Reply</button>
                     <button class="secondary-button pure-button">Forward</button>
                     <button class="secondary-button pure-button">Move to</button>
-                </div>
+                </div>-->
             </div>
 
             <div class="email-content-body">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    To upload your documentation zip files
                 </p>
                 <p>
-                    Duis aute irure dolor in reprehenderit in voluptate velit essecillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
-                <p>
-                    Aliquam ac feugiat dolor. Proin mattis massa sit amet enim iaculis tincidunt. Mauris tempor mi vitae sem aliquet pharetra. Fusce in dui purus, nec malesuada mauris. Curabitur ornare arcu quis mi blandit laoreet. Vivamus imperdiet fermentum mauris, ac posuere urna tempor at. Duis pellentesque justo ac sapien aliquet egestas. Morbi enim mi, porta eget ullamcorper at, pharetra id lorem.
-                </p>
-                <p>
-                    Donec sagittis dolor ut quam pharetra pretium varius in nibh. Suspendisse potenti. Donec imperdiet, velit vel adipiscing bibendum, leo eros tristique augue, eu rutrum lacus sapien vel quam. Nam orci arcu, luctus quis vestibulum ut, ullamcorper ut enim. Morbi semper erat quis orci aliquet condimentum. Nam interdum mauris sed massa dignissim rhoncus.
-                </p>
-                <p>
-                    Regards,<br>
-                    Tilo
+                    <ol>
+                    <li>Generate your docs using mkdocs hugo jekyle pelican or some other SSG</li>
+                    <li>Zip that folder and ensure its called <b>public</b></li>
+                    <li class="email-content-subtitle">
+                    Post the document as a form
+                    <blockquote>
+                    <code>
+                    http -f post http://localhost:8000/u/ app=test repo=https://github.com/rosscdh/rockument.git payload@$PWD/test-payload.zip revision=v0.0.4
+                    </code>
+                    </blockquote>
+                    </li>
+                    </ol>
                 </p>
             </div>
         </div>
@@ -108,10 +112,24 @@
 {% endblock %}
 
 {% block end_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js" integrity="sha512-4xUl/d6D6THrAnXAwGajXkoWaeMNwEKK4iNfq5DotEbLPAfk6FSxSP3ydNxqDgCw1c/0Z1Jg6L8h2j+++9BZmg==" crossorigin="anonymous"></script>
+
 {{ object_list|json_script:"app-data" }}
-
-
 <script>
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).fromNow()
+  }
+})
+var idx = lunr(function () {
+  this.ref('name')
+  this.field('slug')
+
+  documents.forEach(function (doc) {
+    this.add(doc)
+  }, this)
+})
 var app = new Vue({
   el: '#app',
   data: {

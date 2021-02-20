@@ -6,7 +6,12 @@ class RevisionSerializer(serializers.ModelSerializer):
     url = serializers.URLField(source='get_url')
     class Meta:
         model = Revision
-        fields = ['revision', 'repo', 'url']
+        fields = ['pk',
+                  'revision',
+                  'repo',
+                  'url',
+                  'created',
+                  'updated',]
 
 
 class AppSerializer(serializers.ModelSerializer):
@@ -15,7 +20,12 @@ class AppSerializer(serializers.ModelSerializer):
     url = serializers.URLField(source='get_url')
     class Meta:
         model = App
-        fields = ['id', 'slug', 'name', 'num_revisions', 'latest_revisions', 'url']
+        fields = ['id',
+                 'slug',
+                 'name',
+                 'num_revisions',
+                 'latest_revisions',
+                 'url']
 
     def get_num_revisions(self, obj) -> int:
         return obj.revision_set.count()

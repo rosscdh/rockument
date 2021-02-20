@@ -17,6 +17,8 @@ class Revision(models.Model):
     app = models.ForeignKey('sponge.App', on_delete=models.CASCADE)
     revision = models.CharField(max_length=64)
     repo = models.URLField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     data = models.JSONField(default=dict, blank=True, null=False)
 
     class Meta:
