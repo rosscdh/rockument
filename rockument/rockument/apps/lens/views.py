@@ -15,7 +15,7 @@ class RevisionDetailView(generic.DetailView):
       if target_revision == 'latest':
         target_revision = self.object.revision_set.all().order_by('revision').first()
       else:
-        target_revision = get_object_or_404(Revision, revision=target_revision)
+        target_revision = get_object_or_404(Revision, revision=target_revision, app=self.object)
       redirect_url = f"{settings.S3_PUBLIC_URL}{settings.AWS_S3_BUCKET_NAME}/{target_revision.s3_base_path()}/"
       
       return self.response_class(

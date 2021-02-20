@@ -32,7 +32,8 @@ services:
   rockument_worker:
     image: rockument_rockument
     command: ["python", "manage.py", "rqworker"]
-    depends_on: rockument
+    depends_on:
+    - rockument
     env_file:
     - .env.example
     volumes:

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% for app in object_list %}
+<div>
+<h3><a target="_NEW" href="{% url 'lens:app_revision' slug=app.slug revision='latest' %}">{{ app }}</a></h3>
+
+{% for rev in app.revision_set.all %}
+<div><a target="_NEW" href="{% url 'lens:app_revision' slug=app.slug revision=rev.revision %}">{{ rev.revision }}</a></div>
+{% endfor %}
+</div>
+<hr/>
+{% endfor %}
+</div>
+{% endblock %}
