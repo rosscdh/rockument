@@ -1,3 +1,4 @@
 whoosh_index
-db.sqlite3
+**/*/db.sqlite3
+**/*/__pycache__
 data/*
