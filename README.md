@@ -1,6 +1,8 @@
 # Rockument
 
-Simple gitlab pages improver built on python
+Simple document host system similar to hostthedocs or gitlab pages
+
+![Rockumentation](rockumentation-v1.png)
 
 ```
 docker-compose up
@@ -11,3 +13,10 @@ opne localhost:8000/v/test/
 opne localhost:8000/v/test/latest/
 opne localhost:8000/v/test/v0.0.4/
 ```
+
+### Uses
+
+* django
+* redis
+* vuejs
+* elasticsearch
