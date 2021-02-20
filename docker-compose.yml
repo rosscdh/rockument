@@ -42,14 +42,14 @@ services:
     networks:
     - rockument-be
 
-  db:
-    image: postgres:13-alpine
-    env_file:
-    - .env.example
-    volumes:
-    - db:/var/lib/postgresql/data
-    networks:
-    - rockument-be
+  # db:
+  #   image: postgres:13-alpine
+  #   env_file:
+  #   - .env.example
+  #   volumes:
+  #   - db:/var/lib/postgresql/data
+  #   networks:
+  #   - rockument-be
 
   redis:
     image: redis:alpine

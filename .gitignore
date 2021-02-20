@@ -1,2 +1,3 @@
 whoosh_index
+db.sqlite3
 data/*
