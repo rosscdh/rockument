@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Nordeus">
+  <link rel="canonical" href="http://pushkin.io/certificates/">
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Setup certificates - Pushkin Documentation</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Setup certificates";
+    var mkdocs_page_input_path = "certificates.md";
+    var mkdocs_page_url = "/certificates/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Pushkin Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Setup certificates</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../measuring/">Measuring results</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../roadmap/">Roadmap</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Pushkin Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Setup certificates</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Nordeus/pushkin/edit/master/docs/certificates.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="google-and-apple-certificates">Google and Apple certificates</h1>
+<p>Before you start sending notifications, you will need Google Cloud Messaging (GCM) and Apple Push Notification Service (APN) certificates.</p>
+<p>Obtaining a GCM key can be done by following the documentation on 
+<a href="https://developers.google.com/api-client-library/php/guide/aaa_apikeys#acquiring-an-api-key">developers.google.com</a>. <br />
+Once acquired, store the key in the Pushkin configuration: <code>config.ini</code>. <br />
+You can find <code>config.ini</code> in the Pushkin root dir, and the field you must find is named <code>gcm_access_key</code> under <strong>Messenger</strong> section. <br />
+Under the same section there is <code>apns_certificate_path</code> field where you must provide the path to your APN certificate. If you already have an APN certificate, you can skip the next part.</p>
+<p><strong>Obtaining APN certificate</strong></p>
+<ol>
+<li>
+<p>Open Keychain Access on your Mac OS X system. It may be located in <strong><em>Applications &gt; Utilities &gt; Keychain Access</em></strong>.
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Select <strong><em>Keychain Access &gt; Certificate Assistant &gt; Request a Certificate From a Certificate Authority...</em></strong>
+    <img alt="Keychain Access" src="../img/1.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Select the <strong><em>Save to disk</em></strong> option and enter your information in the required fields. This creates a certification request file that will be used later.
+    <img alt="Save to disk" src="../img/2.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Select your app from the <a href="https://developer.apple.com/account/ios/identifier/bundle">Apple's Developer site</a> and press <strong><em>Edit</em></strong>
+    <img alt="Edit" src="../img/3.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Scroll down to the bottom and enable Push Notifications and press <strong><em>Create Certificate...</em></strong> in either Development or Production. Here's the difference between each kind of certificate:</p>
+<ul>
+<li>Sandbox Push Certificate (Also known as Development) - For sending push notifications to a development version of your app that was built with an Apple Development provisioning profile.</li>
+<li>Production Push Certificate - For production builds that are submitted to the app store built with an Apple "App Store" provisioning profile, or for testing push notifications in an Ad-Hoc build built with an Apple "Ad Hoc" provisioning profile.</li>
+</ul>
+<p>Basically, you will want to start with a Sandbox (Development) Push Certificate when developing or updating your app. Then before submitting your app build it with an "Ad Hoc" Provisioning Profile and Production Push Certificate and make sure it receives push notifications. Finally, when submitting your app continue using the production push certificate.
+<br/>
+<br/>
+<img alt="Create Certificate" src="../img/4.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Press <strong><em>Continue</em></strong>
+    <img alt="Continue" src="../img/5.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Press <strong><em>Choose File...</em></strong>, select the <code>.certSigningRequest</code> file you saved in <em>step 1</em>, press <strong><em>open</em></strong>, and then press <strong><em>Generate</em></strong>.
+    <img alt="Choose File" src="../img/7.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Press <strong><em>Download</em></strong> to save your certificate
+    <img alt="Download" src="../img/8.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Open the <code>.cer</code> file you downloaded in the last step by double clicking on it in <strong><em>Finder</em></strong>.
+    <img alt="Finder" src="../img/9.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>After a few seconds the <strong>Keychain Access</strong> program should pop up. <strong><em>Select Login &gt; Keys</em></strong> then right click on your key in the list and select <strong><em>Export</em></strong>.
+    <img alt="Export" src="../img/10.png" />
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Give the file a unique name and press <strong><em>save</em></strong>. You will have an option to protect the file with a password. 
+<br/>
+<br/></p>
+</li>
+<li>
+<p>Now you need to convert .p12 key to .pem without password, afterwards it can be used in Pushkin. You have 4 commands that you must execute in terminal.</p>
+</li>
+</ol>
+<p>Commands:</p>
+<pre><code class="language-bash">openssl pkcs12 -clcerts -nokeys -in prod_push.p12 -out prod_push_cer.pem
+openssl pkcs12 -nocerts -in prod_push.p12 -out prod_push_key.pem
+openssl rsa -in prod_push_key.pem -out prod_push_key_nopass.pem
+cat prod_push_cer.pem prod_push_key_nopass.pem &gt; prod_push_nopass.pem
+</code></pre>
+<p>We also presume that you have implemented GCM client side. For instructions you can look on <a href="https://developers.google.com/cloud-messaging/android/client">developers.google.com</a>.</p>
+<hr />
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../measuring/" class="btn btn-neutral float-right" title="Measuring results">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>© 2016 <a href="http://www.nordeus.com" target="_blank">Nordeus</a></p>
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Nordeus/pushkin/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../measuring/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

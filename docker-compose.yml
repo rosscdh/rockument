@@ -1,0 +1,75 @@
+version: '3'
+
+networks:
+  rockument-be:
+
+volumes:
+  static:
+  media:
+  db:
+
+services:
+  rockument:
+    build:
+      context: $PWD/rockument
+      dockerfile: $PWD/Dockerfile
+    container_name: rockument
+    stdin_open: true
+    tty: true
+    #command: ["gunicorn", "rockument.asgi:application", "-k", "uvicorn.workers.UvicornWorker", "--reload"]
+    command: ["gunicorn", "rockument.wsgi:application", "-b", "0.0.0.0:8000", "--reload"]
+    ports:
+    - 8000:8000
+    env_file:
+    - .env.example
+    volumes:
+    - $PWD/rockument:/src
+    - static:/var/www/static
+    - media:/var/www/media
+    networks:
+    - rockument-be
+
+  rockument_worker:
+    image: rockument_rockument
+    command: ["python", "manage.py", "rqworker"]
+    env_file:
+    - .env.example
+    volumes:
+    - $PWD/rockument:/src
+    - static:/var/www/static
+    - media:/var/www/media
+    networks:
+    - rockument-be
+
+  db:
+    image: postgres:13-alpine
+    env_file:
+    - .env.example
+    volumes:
+    - db:/var/lib/postgresql/data
+    networks:
+    - rockument-be
+
+  redis:
+    image: redis:alpine
+    networks:
+    - rockument-be
+
+  s3:
+    image: minio/minio:latest
+    command: ["server", "/data"]
+    ports:
+    - 9000:9000
+    env_file:
+    - .env.example
+    volumes:
+    - $PWD/data:/data
+    networks:
+    - rockument-be
+
+  # elasticsearch:
+  #   image: elasticsearch:alpine
+  #   env_file:
+  #   - .env.example
+  #   networks:
+  #   - rockument-be

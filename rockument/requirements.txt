@@ -1,0 +1,14 @@
+django
+werkzeug
+djangorestframework
+django-extensions
+django-haystack
+django-okta-auth
+uvicorn[standard]
+gunicorn
+django-rq
+boto3
+psycopg2-binary
+jslog4kube
+arrow
+Whoosh
