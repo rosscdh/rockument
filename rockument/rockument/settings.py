@@ -183,6 +183,6 @@ STATICFILES_FINDERS = [
 ]
 
 if sys.argv[0:2] == ["manage.py", "test"]:
-    pass
+    from .test_settings import *
 else:
     from rockument.logging import *

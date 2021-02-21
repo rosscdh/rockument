@@ -1,7 +1,7 @@
 from django.views import generic
 from rest_framework.renderers import JSONRenderer
 from rockument.apps.sponge.models import App
-from rockument.apps.sponge.serializers import AppSerializer
+from rockument.apps.sponge.api.serializers import AppSerializer
 
 class HomePageView(generic.ListView):
     model = App

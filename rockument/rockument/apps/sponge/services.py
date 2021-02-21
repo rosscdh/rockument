@@ -1,6 +1,29 @@
 import boto3
 from pathlib import Path
+from ordered_set import OrderedSet
 from django.conf import settings
+
+
+class CommonSegmentService:
+    """
+    Service to find the common root folder in a set of files extracted to a location
+    matrix is a glob matrix of Posix Path objects
+    """
+    forbidden_sys_junk = (
+        '__MACOSX'
+    )
+    def __init__(self, matrix: list):
+        matrix = [str(line).strip().split('/') for line in matrix if isinstance(line, Path)]
+        for forbidden in self.forbidden_sys_junk:
+            matrix = [i for i in matrix if forbidden not in str(i)]
+        # import pdb;pdb.set_trace()
+        self.matrix = matrix
+
+    def process(self) -> str:
+        common_segments = list(OrderedSet(self.matrix[0]).intersection(*self.matrix[1:]))
+        if common_segments:
+            return f"{common_segments[-1]}/"
+        return ''
 
 
 class FileHandlerService:

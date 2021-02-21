@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import App, Revision
+from ..models import App, Revision
 
 
 class RevisionSerializer(serializers.ModelSerializer):
