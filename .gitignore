@@ -2,3 +2,4 @@ whoosh_index
 **/*/db.sqlite3
 **/*/__pycache__
 data/*
+rockument_proxy/caddy-s3-proxy
