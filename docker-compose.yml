@@ -30,7 +30,7 @@ services:
     - rockument-be
 
   rockument_worker:
-    image: rockument_rockument
+    image: rockumentation_rockument
     command: ["python", "manage.py", "rqworker"]
     stdin_open: true
     tty: true
